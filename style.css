@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;500&display=swap');
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+body{
+    background-image: url("/images/hermoso-concepto-criptomoneda.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: 'Archivo', sans-serif;
+}
+.title{
+    padding: 30px;
+    color: white;
+    font-size: 150%;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgb(0, 0, 41);
+    margin-bottom: 15vh;
+}
+.tabla-monedas{
+    text-align: center;
+}
+table{
+    width: 600px;
+    justify-content: center;
+    text-align: center;
+    background-color: white;
+    padding: 10px;
+    margin: 0 auto;
+    box-shadow: 10px 10px 5px 0px rgba(6, 2, 46, 0.75);
+}
+th{
+    padding: 10px;
+}
+td{
+    padding: 10px;
+}
+table, th, td{
+    border: 1px solid black;
+    border-collapse:collapse ;
+}
