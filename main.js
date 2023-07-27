@@ -25,7 +25,7 @@ function ingresarDatos(){
 function calcularMoneda(datosCorrectos){
     if (datosCorrectos == true){
     
-        let entrada = prompt("Ingresar la moneda a comprar (en mayúscula), indicando los símbolos como menciona la tabla de abajo. Cuando desea cancelar, presione 'ESC'.");
+        let entrada = prompt("Ingresar la moneda a comprar (en mayúscula), indicando los símbolos (BTC, ETH, DAI, XRP, BCH, USDT). Cuando desea cancelar, presione 'ESC'.");
     
         while (entrada != "ESC") {
           switch (entrada) {
