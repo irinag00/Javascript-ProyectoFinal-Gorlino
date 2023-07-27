@@ -6,7 +6,7 @@
     text-decoration: none;
 }
 body{
-    background-image: url("/images/hermoso-concepto-criptomoneda.jpg");
+    background-image: url("./images/hermoso-concepto-criptomoneda-fotor-20230727153542.jpg");
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -19,7 +19,8 @@ body{
     font-size: 150%;
     text-align: center;
     text-shadow: 1px 1px 2px rgb(0, 0, 41);
-    margin-bottom: 15vh;
+    margin-bottom: 5vh;
+    margin-top: 5vh;
 }
 .tabla-monedas{
     text-align: center;
