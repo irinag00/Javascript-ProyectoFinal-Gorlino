@@ -68,6 +68,7 @@ function calcularMoneda(datosCorrectos){
         }
         entrada = prompt("Ingresar la moneda a comprar (en mayúscula), indicando los símbolos (BTC, ETH, DAI, XRP, BCH, USDT). Cuando desea cancelar, escriba 'ESC'.");
       }
+      
       for (const transaccion of transacciones) {
         alert(`Usted señor/a: ${apellido}, ${nombre} ha ingresado:
         Cantidad de Pesos ingresados: $${transaccion.cantidadPesos}
