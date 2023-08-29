@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;500&family=Poppins:wght@200;500&display=swap');
 * {
     margin: 0px;
     padding: 0px;
@@ -6,13 +6,43 @@
     text-decoration: none;
 }
 body{
-    background-image: url("./images/hermoso-concepto-criptomoneda-fotor-20230727153542.jpg");
+    background-image: url("./images/Sprinkle.svg");
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    font-family: 'Archivo', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
+
+/* NavBar */
+header{
+   /* #0E2A47; */
+   background-color: #091b30;
+   box-shadow: 5px 10px 18px rgba(0, 0, 0, 0.2);
+}
+.navbar{
+    padding: 0% !important;
+}
+.active{
+}
+.navbar-nav li {
+    padding-right: 20px;
+}
+.nav-link {
+    font-size: 1.1em !important;
+}
+.nav-item :hover{
+    color: #507E95;
+}
+.dropdown-menu{
+    background-color: #507E95;
+}
+.imagen-logo{
+    width: 90px;
+    margin: 0%;
+}
+
+
 .title{
     padding: 30px;
     color: white;

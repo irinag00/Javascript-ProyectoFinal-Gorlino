@@ -10,9 +10,9 @@ let nombre;
 let apellido;
 let resultado;
 
-alert("¡Bienvenido a la Billetera de Cryptos!")
-ingresarDatos();
-calcularMoneda(datosCorrectos);
+// alert("¡Bienvenido a la Billetera de Cryptos!")
+// ingresarDatos();
+// calcularMoneda(datosCorrectos);
 
 function ingresarDatos(){
     while (datosCorrectos == false){
