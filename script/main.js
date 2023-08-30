@@ -10,6 +10,11 @@ let nombre;
 let apellido;
 let resultado;
 
+const btnIngresar = document.getElementById("boton-login");
+btnIngresar.addEventListener("click", () => {
+  
+});
+
 // alert("¡Bienvenido a la Billetera de Cryptos!")
 // ingresarDatos();
 // calcularMoneda(datosCorrectos);

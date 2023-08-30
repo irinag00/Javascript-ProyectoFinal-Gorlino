@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;500&family=Poppins:wght@200;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
 * {
     margin: 0px;
     padding: 0px;
@@ -71,4 +72,20 @@ td{
 table, th, td{
     border: 1px solid black;
     border-collapse:collapse ;
+}
+
+/*Login*/
+.login{
+    margin-top: 12vh;
+}
+/*Inicio*/
+.imagen-inicio{
+    width: 120%;
+}
+.btn-empezar{ 
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 10px;
 }
