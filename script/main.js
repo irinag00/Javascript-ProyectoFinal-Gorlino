@@ -8,24 +8,102 @@ let datosCorrectos= false;
 let moneda;
 let nombre;
 let apellido;
+let error;
 let resultado;
 
-const btnIngresar = document.getElementById("boton-login");
+const btnIngresar = document.getElementById("btnLogin");
 btnIngresar.addEventListener("click", () => {
-  
+  ingresarDatos();
 });
+
+function ingresarDatos() {
+  nombre= document.getElementById("nombreInput").value;
+  apellido= document.getElementById("apellidoInput").value;
+  // let persona= document.getElementById("nombreIngresado");
+  validarDatos(nombre, apellido);
+  let datosCompletos = `${apellido}, ${nombre}`;
+  localStorage.setItem("datosCompletos", datosCompletos);
+
+  if(datosCorrectos){
+    window.location.href = "../pages/finanzas.html"
+  }
+
+  let datosMostrados = document.getElementById("nombreIngresado");
+  let usuario = localStorage.getItem("datosCompletos");
+  datosMostrados.innerHTML = usuario;
+  // document.addEventListener("DOMContentLoaded", function () {
+  //   let datosMostrados = document.getElementById ("nombreIngresado");
+  //   datosCompletos = localStorage.getItem("datosCompletos");
+  //   datosMostrados.textContent = datosCompletos;
+  // });
+  
+}
+
+function validarDatos(nombre, apellido){
+  error= document.getElementById("divError");
+    if (nombre != "" && apellido != ""){
+      datosCorrectos = true;
+      error.style.display = "none"; //oculta el mensaje de error
+    }
+    else
+    {
+      error.style.display = "block";
+      error.textContent= "Por favor, ingrese un nombre y un apellido válidos.";
+      datosCorrectos= false;
+    }
+}
+
+function mostrarDatos(){
+  document.addEventListener("DOMContentLoaded", function () {
+    let datosMostrados = document.getElementById ("nombreIngresado");
+    let datosCompletos = localStorage.getItem("datosCompletos");
+    datosMostrados.textContent = datosCompletos;
+});
+}
+// function mostrarPersona() {
+//   let listaPersona= document.getElementById("nombreIngresado");
+//   listaPersona.textContent
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // alert("¡Bienvenido a la Billetera de Cryptos!")
 // ingresarDatos();
 // calcularMoneda(datosCorrectos);
 
-function ingresarDatos(){
-    while (datosCorrectos == false){
-      nombre= prompt ("Ingrese su nombre");
-      apellido = prompt ("Ingrese su apellido");
-      validarDatos(nombre, apellido);
-    }
-}
+// function ingresarDatos(){
+//     while (datosCorrectos == false){
+//       nombre= prompt ("Ingrese su nombre");
+//       apellido = prompt ("Ingrese su apellido");
+//       validarDatos(nombre, apellido);
+//     }
+// }
 
 function convertirMoneda (moneda, cantidad){
   const tasas = {
@@ -113,15 +191,7 @@ function calcularMoneda(datosCorrectos){
     datosCorrectos = false;
   }
 
-function validarDatos(nombre, apellido){
-    if (nombre != "" && apellido != ""){
-        alert("Los datos se ingresaron correctamente.");
-        datosCorrectos = true;
-    }else{
-        alert ("Los datos ingresados no son correctos, deben volver a ingresar.");
-        datosCorrectos= false;
-    }
-}
+
 function validarNro (moneda){
     if(moneda != "" && moneda != 0){
         parseInt(moneda);
