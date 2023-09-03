@@ -10,11 +10,15 @@ let nombre;
 let apellido;
 let error;
 let resultado;
+let correcto;
+let usuario;
 
 const btnIngresar = document.getElementById("btnLogin");
-btnIngresar.addEventListener("click", () => {
-  ingresarDatos();
-});
+if (btnIngresar){
+  btnIngresar.addEventListener("click", ingresarDatos);
+}
+
+mostrarDatos();
 
 function ingresarDatos() {
   nombre= document.getElementById("nombreInput").value;
@@ -23,19 +27,25 @@ function ingresarDatos() {
   validarDatos(nombre, apellido);
   let datosCompletos = `${apellido}, ${nombre}`;
   localStorage.setItem("datosCompletos", datosCompletos);
-
+  // usuario = localStorage.getItem("datosCompletos");
   if(datosCorrectos){
-    window.location.href = "../pages/finanzas.html"
+    correcto = document.getElementById("divCorrecto");
+    correcto.style.display = "block";
+    correcto.textContent = "¡Su usuario se ingresó correctamente!";
+    document.getElementById("nombreInput").value = "";
+    document.getElementById("apellidoInput").value="";
   }
 
-  let datosMostrados = document.getElementById("nombreIngresado");
-  let usuario = localStorage.getItem("datosCompletos");
-  datosMostrados.innerHTML = usuario;
-  // document.addEventListener("DOMContentLoaded", function () {
-  //   let datosMostrados = document.getElementById ("nombreIngresado");
-  //   datosCompletos = localStorage.getItem("datosCompletos");
-  //   datosMostrados.textContent = datosCompletos;
-  // });
+}
+
+function mostrarDatos (){
+  usuario = localStorage.getItem("datosCompletos");
+  let mostrarNombre = document.getElementById("usuario");
+  if(usuario){
+    mostrarNombre.innerHTML= `Bienvenido señor/a: ${usuario}`;
+  }else{
+    mostrarNombre.innerHTML= "¡Aún no ha iniciacio sesión!"
+  }
   
 }
 
@@ -53,16 +63,22 @@ function validarDatos(nombre, apellido){
     }
 }
 
-function mostrarDatos(){
-  document.addEventListener("DOMContentLoaded", function () {
-    let datosMostrados = document.getElementById ("nombreIngresado");
-    let datosCompletos = localStorage.getItem("datosCompletos");
-    datosMostrados.textContent = datosCompletos;
-});
-}
+// function mostrarDatos(){
+//   document.addEventListener("DOMContentLoaded", function () {
+//     let container = document.getElementById("container");
+//     let mostrarUsuario = document.createElement("h1");
+//     let usuario = localStorage.getItem("datosCompletos");
+//     mostrarUsuario.innerHTML = usuario;
+//     document.body.append(mostrarUsuario);
+//     container.append(mostrarUsuario);
+//   })
+// }
 // function mostrarPersona() {
-//   let listaPersona= document.getElementById("nombreIngresado");
-//   listaPersona.textContent
+//   document.addEventListener("DOMContentLoaded", function () {
+//     let datosMostrados = document.getElementById ("nombreIngresado");
+//     let datosCompletos = localStorage.getItem("datosCompletos");
+//     datosMostrados.textContent = datosCompletos;
+//   });
 // }
 
 
