@@ -89,3 +89,13 @@ table, th, td{
     padding-right: 20px;
     margin-top: 10px;
 }
+ /* Mis Finanzas: carousel*/
+ .card-img-top{
+  width: 200px; /* Ajusta el ancho según tus necesidades */
+  height: 200px; /* Ajusta la altura según tus necesidades */
+  object-fit: cover; /* Para asegurarte de que las imágenes se ajusten y recorten si es necesario */
+}
+.row{
+    margin-left: 10%;
+    margin-right: 10%;
+}

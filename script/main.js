@@ -13,25 +13,25 @@ let resultado;
 let correcto;
 let usuario;
 
+//cuando se clickea en el boton 'Iniciar sesión' de la página de 'login'
 const btnIngresar = document.getElementById("btnLogin");
 if (btnIngresar){
   btnIngresar.addEventListener("click", ingresarDatos);
 }
-
-mostrarDatos();
+mostrarDatos(); //muestra el nombre y apellido ingresado en la página 'finanzas'
 
 function ingresarDatos() {
   nombre= document.getElementById("nombreInput").value;
   apellido= document.getElementById("apellidoInput").value;
-  // let persona= document.getElementById("nombreIngresado");
-  validarDatos(nombre, apellido);
-  let datosCompletos = `${apellido}, ${nombre}`;
-  localStorage.setItem("datosCompletos", datosCompletos);
-  // usuario = localStorage.getItem("datosCompletos");
+  validarDatos(nombre, apellido); //valido datos ingresados
+  let datosCompletos = `${apellido}, ${nombre}`; 
+  localStorage.setItem("datosCompletos", datosCompletos); //datos almacenados en el localstorage
+
   if(datosCorrectos){
     correcto = document.getElementById("divCorrecto");
     correcto.style.display = "block";
     correcto.textContent = "¡Su usuario se ingresó correctamente!";
+    //vacío los campos
     document.getElementById("nombreInput").value = "";
     document.getElementById("apellidoInput").value="";
   }
@@ -46,7 +46,7 @@ function mostrarDatos (){
   }else{
     mostrarNombre.innerHTML= "¡Aún no ha iniciacio sesión!"
   }
-  
+  //muestro datos en la página 'finanzas'
 }
 
 function validarDatos(nombre, apellido){
@@ -62,25 +62,6 @@ function validarDatos(nombre, apellido){
       datosCorrectos= false;
     }
 }
-
-// function mostrarDatos(){
-//   document.addEventListener("DOMContentLoaded", function () {
-//     let container = document.getElementById("container");
-//     let mostrarUsuario = document.createElement("h1");
-//     let usuario = localStorage.getItem("datosCompletos");
-//     mostrarUsuario.innerHTML = usuario;
-//     document.body.append(mostrarUsuario);
-//     container.append(mostrarUsuario);
-//   })
-// }
-// function mostrarPersona() {
-//   document.addEventListener("DOMContentLoaded", function () {
-//     let datosMostrados = document.getElementById ("nombreIngresado");
-//     let datosCompletos = localStorage.getItem("datosCompletos");
-//     datosMostrados.textContent = datosCompletos;
-//   });
-// }
-
 
 
 
