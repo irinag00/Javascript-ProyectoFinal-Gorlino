@@ -67,6 +67,8 @@ function validarDatos(nombre, apellido){
 function calcularMoneda(moneda){
   let transacciones;
   let transaccion;
+  let errorCompra= document.getElementById("errorCompra");
+  let exitoCompra= document.getElementById("exitoCompra");
   let pesosBtc = parseInt(document.getElementById("montoPesosBTC").value);
   let pesosEth= parseInt(document.getElementById("montoPesosETH").value);
   let pesosXrp= parseInt(document.getElementById("montoPesosXRP").value);
@@ -78,9 +80,12 @@ function calcularMoneda(moneda){
     switch(moneda){
       case "BTC":
         if (isNaN (pesosBtc) || pesosBtc <= 0){
-          alert('Por favor, ingresa un monto válido en pesos argentinos.');
+          errorCompra.style.display= "block";
+          errorCompra.textContent='Por favor, ingresa un monto válido en pesos argentinos.';
+          exitoCompra.style.display= "none";
           return;
         }
+        errorCompra.style.display= "none";
         resultado = convertirMoneda(moneda, pesosBtc);
         transaccion = {
           usuario: localStorage.getItem("datosCompletos"),
@@ -92,9 +97,12 @@ function calcularMoneda(moneda){
         break;
       case "ETH":
         if (isNaN (pesosEth) || pesosEth <= 0){
-          alert('Por favor, ingresa un monto válido en pesos argentinos.');
+          errorCompra.style.display= "block";
+          errorCompra.textContent='Por favor, ingresa un monto válido en pesos argentinos.';
+          exitoCompra.style.display= "none";
           return;
         }
+        errorCompra.style.display= "none";
         resultado = convertirMoneda(moneda, pesosEth);
         transaccion = {
           usuario: localStorage.getItem("datosCompletos"),
@@ -106,9 +114,12 @@ function calcularMoneda(moneda){
         break;
       case "DAI":
         if (isNaN (pesosDai) || pesosDai <= 0){
-          alert('Por favor, ingresa un monto válido en pesos argentinos.');
+          errorCompra.style.display= "block";
+          errorCompra.textContent='Por favor, ingresa un monto válido en pesos argentinos.';
+          exitoCompra.style.display= "none";
           return;
         }
+        errorCompra.style.display= "none";
         resultado = convertirMoneda(moneda, pesosDai);
         transaccion = {
           usuario: localStorage.getItem("datosCompletos"),
@@ -120,9 +131,12 @@ function calcularMoneda(moneda){
         break;
       case "XRP":
         if (isNaN (pesosXrp) || pesosXrp <= 0){
-          alert('Por favor, ingresa un monto válido en pesos argentinos.');
+          errorCompra.style.display= "block";
+          errorCompra.textContent='Por favor, ingresa un monto válido en pesos argentinos.';
+          exitoCompra.style.display= "none";
           return;
         }
+        errorCompra.style.display= "none";
         resultado = convertirMoneda(moneda, pesosXrp);
         transaccion = {
           usuario: localStorage.getItem("datosCompletos"),
@@ -134,9 +148,12 @@ function calcularMoneda(moneda){
         break;
       case "BCH":
         if (isNaN (pesosBch) || pesosBch <= 0){
-          alert('Por favor, ingresa un monto válido en pesos argentinos.');
+          errorCompra.style.display= "block";
+          errorCompra.textContent='Por favor, ingresa un monto válido en pesos argentinos.';
+          exitoCompra.style.display= "none";
           return;
         }
+        errorCompra.style.display= "none";
         resultado = convertirMoneda(moneda, pesosBch);
         transaccion = {
           usuario: localStorage.getItem("datosCompletos"),
@@ -148,9 +165,12 @@ function calcularMoneda(moneda){
         break;
       case "USDT":
         if (isNaN (pesosUsdt) || pesosUsdt <= 0){
-          alert('Por favor, ingresa un monto válido en pesos argentinos.');
+          errorCompra.style.display= "block";
+          errorCompra.textContent='Por favor, ingresa un monto válido en pesos argentinos.';
+          exitoCompra.style.display= "none";
           return;
         }
+        errorCompra.style.display= "none";
         resultado = convertirMoneda(moneda, pesosUsdt);
         transaccion = {
           usuario: localStorage.getItem("datosCompletos"),
@@ -165,7 +185,9 @@ function calcularMoneda(moneda){
     transacciones = JSON.parse(localStorage.getItem('transacciones')) || []; //evalua si hay datos o está vacio el localstorage
     transacciones.push(transaccion); //guardo cada transaccion en un array
     localStorage.setItem('transacciones', JSON.stringify(transacciones)); //ingreso a local storage las transacciones
-
+    
+    exitoCompra.style.display= "block";
+    exitoCompra.textContent= "¡Compra Exitosa!";
     mostrarTrasacciones(); //muestro la tabla de transacciones
   }
   else{
