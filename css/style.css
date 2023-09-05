@@ -41,7 +41,7 @@ header{
     margin: 0%;
 }
 
-
+/*Tablas*/
 .title{
     padding: 30px;
     color: white;
@@ -53,6 +53,7 @@ header{
 }
 .tabla-monedas{
     text-align: center;
+    margin-top: 40px;
 }
 table{
     color: white;
@@ -91,9 +92,9 @@ table, th, td{
 }
  /* Mis Finanzas: carousel*/
  .card-img-top{
-  width: 200px; /* Ajusta el ancho según tus necesidades */
-  height: 200px; /* Ajusta la altura según tus necesidades */
-  object-fit: cover; /* Para asegurarte de que las imágenes se ajusten y recorten si es necesario */
+  width: 200px; 
+  height: 200px; 
+  object-fit: cover; 
 }
 .row{
     margin-left: 10%;
