@@ -19,6 +19,7 @@ if (btnIngresar){
   btnIngresar.addEventListener("click", ingresarDatos);
 }
 mostrarDatos(); //muestra el nombre y apellido ingresado en la página 'finanzas'
+mostrarTrasacciones(); //muestro la tabla de transacciones (si existen)
 
 function ingresarDatos() {
   nombre= document.getElementById("nombreInput").value;
@@ -63,9 +64,156 @@ function validarDatos(nombre, apellido){
     }
 }
 
+function calcularMoneda(moneda){
+  let transacciones;
+  let transaccion;
+  let pesosBtc = parseInt(document.getElementById("montoPesosBTC").value);
+  let pesosEth= parseInt(document.getElementById("montoPesosETH").value);
+  let pesosXrp= parseInt(document.getElementById("montoPesosXRP").value);
+  let pesosDai= parseInt(document.getElementById("montoPesosDAI").value);
+  let pesosBch= parseInt(document.getElementById("montoPesosBCH").value);
+  let pesosUsdt= parseInt(document.getElementById("montoPesosUSDT").value);
+  //evaluo que se haya ingresado un nombre y apellido
+  if(localStorage.getItem("datosCompletos")){
+    switch(moneda){
+      case "BTC":
+        if (isNaN (pesosBtc) || pesosBtc <= 0){
+          alert('Por favor, ingresa un monto válido en pesos argentinos.');
+          return;
+        }
+        resultado = convertirMoneda(moneda, pesosBtc);
+        transaccion = {
+          usuario: localStorage.getItem("datosCompletos"),
+          fecha: new Date().toLocaleString(),
+          moneda: moneda,
+          cantidadPesos: pesosBtc,
+          cantidadCripto: resultado
+        };
+        break;
+      case "ETH":
+        if (isNaN (pesosEth) || pesosEth <= 0){
+          alert('Por favor, ingresa un monto válido en pesos argentinos.');
+          return;
+        }
+        resultado = convertirMoneda(moneda, pesosEth);
+        transaccion = {
+          usuario: localStorage.getItem("datosCompletos"),
+          fecha: new Date().toLocaleString(),
+          moneda: moneda,
+          cantidadPesos: pesosEth,
+          cantidadCripto: resultado
+        };
+        break;
+      case "DAI":
+        if (isNaN (pesosDai) || pesosDai <= 0){
+          alert('Por favor, ingresa un monto válido en pesos argentinos.');
+          return;
+        }
+        resultado = convertirMoneda(moneda, pesosDai);
+        transaccion = {
+          usuario: localStorage.getItem("datosCompletos"),
+          fecha: new Date().toLocaleString(),
+          moneda: moneda,
+          cantidadPesos: pesosDai,
+          cantidadCripto: resultado
+        };
+        break;
+      case "XRP":
+        if (isNaN (pesosXrp) || pesosXrp <= 0){
+          alert('Por favor, ingresa un monto válido en pesos argentinos.');
+          return;
+        }
+        resultado = convertirMoneda(moneda, pesosXrp);
+        transaccion = {
+          usuario: localStorage.getItem("datosCompletos"),
+          fecha: new Date().toLocaleString(),
+          moneda: moneda,
+          cantidadPesos: pesosXrp,
+          cantidadCripto: resultado
+        };
+        break;
+      case "BCH":
+        if (isNaN (pesosBch) || pesosBch <= 0){
+          alert('Por favor, ingresa un monto válido en pesos argentinos.');
+          return;
+        }
+        resultado = convertirMoneda(moneda, pesosBch);
+        transaccion = {
+          usuario: localStorage.getItem("datosCompletos"),
+          fecha: new Date().toLocaleString(),
+          moneda: moneda,
+          cantidadPesos: pesosBch,
+          cantidadCripto: resultado
+        };
+        break;
+      case "USDT":
+        if (isNaN (pesosUsdt) || pesosUsdt <= 0){
+          alert('Por favor, ingresa un monto válido en pesos argentinos.');
+          return;
+        }
+        resultado = convertirMoneda(moneda, pesosUsdt);
+        transaccion = {
+          usuario: localStorage.getItem("datosCompletos"),
+          fecha: new Date().toLocaleString(),
+          moneda: moneda,
+          cantidadPesos: pesosUsdt,
+          cantidadCripto: resultado
+        };
+      break;
+    }
+    
+    transacciones = JSON.parse(localStorage.getItem('transacciones')) || []; //evalua si hay datos o está vacio el localstorage
+    transacciones.push(transaccion); //guardo cada transaccion en un array
+    localStorage.setItem('transacciones', JSON.stringify(transacciones)); //ingreso a local storage las transacciones
 
+    mostrarTrasacciones(); //muestro la tabla de transacciones
+  }
+  else{
+    window.location.href= "login.html";
+  }
+}
 
+function mostrarTrasacciones(){
+  let listado = document.getElementById("listado-transacciones");
+  let transacciones = JSON.parse(localStorage.getItem('transacciones')) || [];
+  let usuarioExistente= false;
+  //evalua si el usuario guardado en localstorage es igual al ingresado, si es true entonces me muestra las transacciones que realizó ese usuario
+  transacciones.forEach((item) => {
+    if (item.usuario === localStorage.getItem("datosCompletos")) {
+      usuarioExistente = true;
+    }
+  });
+  if (transacciones.length === 0){
+    listado.innerHTML = '<p>¡No has realizado ninguna compra aún!</p>'
+  }else if (transacciones.length < 6 && usuarioExistente) //le tuve que limitar las transacciones porque me daba error y no mostraba las nuevas
+  {
+    // listado.innerHTML = '';
+    listado.innerHTML= `
+    <thead class="table-light">
+      <tr>
+        <th>Fecha</th>
+        <th>Moneda</th>
+        <th>Pesos Ingresados ($) </th>
+        <th>Monto Final</th>
+      </tr>
+    </thead>`;
+    transacciones.forEach((item) => {
+      listado.innerHTML += `
+        <tbody>
+          <tr>
+            <td>${item.fecha}</td>
+            <td>${item.moneda}</td>
+            <td>${item.cantidadPesos}</td>
+            <td>${item.cantidadCripto} ${item.moneda}</td>
+          </tr>
+        </tbody>`;
+    });
+  }else{
+    localStorage.removeItem("transacciones");
+    location.reload();
+  }
 
+}
 
 
 
@@ -114,7 +262,7 @@ function convertirMoneda (moneda, cantidad){
   return cantidad / tasas[moneda];
 }
 
-function calcularMoneda(datosCorrectos){
+function calcularNada(datosCorrectos){
     if (datosCorrectos == true){
       
       let transacciones = [];
@@ -189,9 +337,9 @@ function calcularMoneda(datosCorrectos){
   }
 
 
-function validarNro (moneda){
-    if(moneda != "" && moneda != 0){
-        parseInt(moneda);
+function validarNro (pesos){
+    if(pesos != "" && pesos != 0){
+        parseInt(pesos);
         datosCorrectos = true;
     }
     else{

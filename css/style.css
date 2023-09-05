@@ -55,19 +55,19 @@ header{
     text-align: center;
 }
 table{
-    width: 600px;
-    justify-content: center;
-    text-align: center;
-    background-color: white;
+    color: white;
+    justify-content: start;
+    text-align: left;
+    background-color:#091b304b;
     padding: 10px;
-    margin: 0 auto;
-    box-shadow: 10px 10px 5px 0px rgba(6, 2, 46, 0.75);
+    box-shadow: 5px 5px 5px 0px rgba(6, 2, 46, 0.74);
 }
 th{
-    padding: 10px;
+    padding: 10px !important;
+    text-align: center;
 }
 td{
-    padding: 10px;
+    padding: 8px !important;
 }
 table, th, td{
     border: 1px solid black;
