@@ -340,15 +340,4 @@ function eliminarUsuario(){
 //   }
 
 
-// function validarNro (pesos){
-//     if(pesos != "" && pesos != 0){
-//         parseInt(pesos);
-//         datosCorrectos = true;
-//     }
-//     else{
-//         alert ("Los datos ingresados no son correctos, deben volver a ingresar.");
-//         datosCorrectos = false;
-//     }
-// }
-
 
