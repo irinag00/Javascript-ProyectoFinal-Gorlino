@@ -187,12 +187,24 @@ function calcularMoneda(moneda){
     localStorage.setItem('transacciones', JSON.stringify(transacciones)); //ingreso a local storage las transacciones
     
     exitoCompra.style.display= "block";
-    exitoCompra.textContent= "¡Compra Exitosa!";
+    exitoCompra.textContent= "¡Compra Exitosa!"; //muestra compra exitosa en verde
     mostrarTrasacciones(); //muestro la tabla de transacciones
   }
   else{
     window.location.href= "login.html";
   }
+}
+
+function convertirMoneda (moneda, cantidad){
+  const tasas = {
+    BTC: bitcoin,
+    ETH: etherium,
+    DAI: dai,
+    XRP: xrp,
+    BCH: bch,
+    USDT: usdt
+  };
+  return cantidad / tasas[moneda];
 }
 
 function mostrarTrasacciones(){
@@ -237,137 +249,106 @@ function mostrarTrasacciones(){
 
 }
 
+function eliminarCompras(){
+  let transacciones = JSON.parse(localStorage.getItem('transacciones')) || [];
+  if (transacciones.length === 0){
+    listado.innerHTML = '<p>¡No has realizado ninguna compra aún!</p>'
+  }else{
+    localStorage.removeItem('transacciones');
+    location.reload();
+  }
+}
+function eliminarUsuario(){
+  usuario = localStorage.getItem("datosCompletos");
+  localStorage.removeItem("datosCompletos");
+  location.reload();
+}
 
 
+// function calcularNada(datosCorrectos){
+//     if (datosCorrectos == true){
+      
+//       let transacciones = [];
+    
+//       let entrada = prompt("Ingresar la moneda a comprar (en mayúscula), indicando los símbolos (BTC, ETH, DAI, XRP, BCH, USDT). Cuando desea cancelar, escriba 'ESC'.");
+
+//       while (entrada != "ESC"){
+//         switch (entrada){
+//           case "BTC":
+//           case "ETH":
+//           case "DAI":
+//           case "XRP":
+//           case "BCH":
+//           case "USDT":
+//             moneda = prompt("Ingrese la cantidad de pesos argentinos ($) para comprar la moneda ingresada.");
+//             validarNro(moneda);
+//             resultado = convertirMoneda(entrada, parseInt(moneda));
+
+//             const transaccion = {
+//               moneda: entrada,
+//               cantidadPesos: moneda,
+//               cantidadCripto: resultado
+//             };
+
+//             transacciones.push(transaccion);
+//             break;
+
+//             default:
+//               alert("La moneda ingresada es incorrecta.");
+//               break;
+//         }
+//         entrada = prompt("Ingresar la moneda a comprar (en mayúscula), indicando los símbolos (BTC, ETH, DAI, XRP, BCH, USDT). Cuando desea cancelar, escriba 'ESC'.");
+//       }
+      
+//       for (const transaccion of transacciones) {
+//         alert(`Usted señor/a: ${apellido}, ${nombre} ha ingresado:
+//         Cantidad de Pesos ingresados: $${transaccion.cantidadPesos}
+//         Cantidad de Cripto comprado: ${transaccion.cantidadCripto} ${transaccion.moneda}.
+//         `);
+//       }
+
+//       busquedaMoneda(transacciones);
+//       filtrarCrypto (transacciones);
+
+//       function busquedaMoneda (transacciones){
+//         let nombreMoneda= prompt("Ingrese el nombre de la moneda que desea buscar en sus compras");
+//         let compra= transacciones.find((item) => item.moneda === nombreMoneda); 
+//         if(compra){
+//           alert(`
+//             Moneda: ${compra.moneda}
+//             Cantidad de Pesos ingresados: $${compra.cantidadPesos}
+//             Cantidad de Cripto comprado: ${compra.cantidadCripto}
+//           `);
+//         } else {
+//           alert("No has adquirido la crypto ingresada.");
+//         };
+//       }
+//       function filtrarCrypto (transacciones){
+//         let crypto= parseInt(prompt("Ingrese el número mínimo de cryptos compradas para filtrarlos."));
+//         let filtrados= transacciones.filter((item) => item.cantidadCripto > crypto);
+
+//         filtrados.forEach((item) => {
+//           alert(`
+//             Moneda: ${item.moneda}
+//             Cantidad de Pesos ingresados: $${item.cantidadPesos}
+//             Cantidad de Cripto comprado: ${item.cantidadCripto}
+//           `);
+//         })
+//       }
+//     }
+//     datosCorrectos = false;
+//   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// alert("¡Bienvenido a la Billetera de Cryptos!")
-// ingresarDatos();
-// calcularMoneda(datosCorrectos);
-
-// function ingresarDatos(){
-//     while (datosCorrectos == false){
-//       nombre= prompt ("Ingrese su nombre");
-//       apellido = prompt ("Ingrese su apellido");
-//       validarDatos(nombre, apellido);
+// function validarNro (pesos){
+//     if(pesos != "" && pesos != 0){
+//         parseInt(pesos);
+//         datosCorrectos = true;
+//     }
+//     else{
+//         alert ("Los datos ingresados no son correctos, deben volver a ingresar.");
+//         datosCorrectos = false;
 //     }
 // }
-
-function convertirMoneda (moneda, cantidad){
-  const tasas = {
-    BTC: bitcoin,
-    ETH: etherium,
-    DAI: dai,
-    XRP: xrp,
-    BCH: bch,
-    USDT: usdt
-  };
-  return cantidad / tasas[moneda];
-}
-
-function calcularNada(datosCorrectos){
-    if (datosCorrectos == true){
-      
-      let transacciones = [];
-    
-      let entrada = prompt("Ingresar la moneda a comprar (en mayúscula), indicando los símbolos (BTC, ETH, DAI, XRP, BCH, USDT). Cuando desea cancelar, escriba 'ESC'.");
-
-      while (entrada != "ESC"){
-        switch (entrada){
-          case "BTC":
-          case "ETH":
-          case "DAI":
-          case "XRP":
-          case "BCH":
-          case "USDT":
-            moneda = prompt("Ingrese la cantidad de pesos argentinos ($) para comprar la moneda ingresada.");
-            validarNro(moneda);
-            resultado = convertirMoneda(entrada, parseInt(moneda));
-
-            const transaccion = {
-              moneda: entrada,
-              cantidadPesos: moneda,
-              cantidadCripto: resultado
-            };
-
-            transacciones.push(transaccion);
-            break;
-
-            default:
-              alert("La moneda ingresada es incorrecta.");
-              break;
-        }
-        entrada = prompt("Ingresar la moneda a comprar (en mayúscula), indicando los símbolos (BTC, ETH, DAI, XRP, BCH, USDT). Cuando desea cancelar, escriba 'ESC'.");
-      }
-      
-      for (const transaccion of transacciones) {
-        alert(`Usted señor/a: ${apellido}, ${nombre} ha ingresado:
-        Cantidad de Pesos ingresados: $${transaccion.cantidadPesos}
-        Cantidad de Cripto comprado: ${transaccion.cantidadCripto} ${transaccion.moneda}.
-        `);
-      }
-
-      busquedaMoneda(transacciones);
-      filtrarCrypto (transacciones);
-
-      function busquedaMoneda (transacciones){
-        let nombreMoneda= prompt("Ingrese el nombre de la moneda que desea buscar en sus compras");
-        let compra= transacciones.find((item) => item.moneda === nombreMoneda); 
-        if(compra){
-          alert(`
-            Moneda: ${compra.moneda}
-            Cantidad de Pesos ingresados: $${compra.cantidadPesos}
-            Cantidad de Cripto comprado: ${compra.cantidadCripto}
-          `);
-        } else {
-          alert("No has adquirido la crypto ingresada.");
-        };
-      }
-      function filtrarCrypto (transacciones){
-        let crypto= parseInt(prompt("Ingrese el número mínimo de cryptos compradas para filtrarlos."));
-        let filtrados= transacciones.filter((item) => item.cantidadCripto > crypto);
-
-        filtrados.forEach((item) => {
-          alert(`
-            Moneda: ${item.moneda}
-            Cantidad de Pesos ingresados: $${item.cantidadPesos}
-            Cantidad de Cripto comprado: ${item.cantidadCripto}
-          `);
-        })
-      }
-    }
-    datosCorrectos = false;
-  }
-
-
-function validarNro (pesos){
-    if(pesos != "" && pesos != 0){
-        parseInt(pesos);
-        datosCorrectos = true;
-    }
-    else{
-        alert ("Los datos ingresados no son correctos, deben volver a ingresar.");
-        datosCorrectos = false;
-    }
-}
 
 
