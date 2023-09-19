@@ -108,3 +108,7 @@ table, th, td{
     margin-left: 10%;
     margin-right: 10%;
 }
+/* Mis Finanzas: botones*/
+.btn-deposito-compra{
+    margin: 10px;
+}

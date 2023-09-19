@@ -43,7 +43,7 @@ function mostrarDatos (){
   usuario = localStorage.getItem("datosCompletos");
   let mostrarNombre = document.getElementById("usuario");
   if(usuario){
-    mostrarNombre.innerHTML= `Bienvenido señor/a: ${usuario}`;
+    mostrarNombre.innerHTML= `Usuario: ${usuario}`;
   }else{
     mostrarNombre.innerHTML= "¡Aún no ha iniciacio sesión!"
   }
