@@ -96,7 +96,15 @@ table, th, td{
   height: 200px; 
   object-fit: cover; 
 }
-.row{
+/* .row{
+    margin-left: 10%;
+    margin-right: 10%;
+} */
+.index{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.carousel-monedas{
     margin-left: 10%;
     margin-right: 10%;
 }
