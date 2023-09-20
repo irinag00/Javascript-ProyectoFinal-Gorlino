@@ -41,42 +41,6 @@ header {
   margin: 0%;
 }
 
-/*Tablas*/
-.title {
-  padding: 30px;
-  color: white;
-  font-size: 150%;
-  text-align: center;
-  text-shadow: 1px 1px 2px rgb(0, 0, 41);
-  margin-bottom: 5vh;
-  margin-top: 5vh;
-}
-.tabla-monedas {
-  text-align: center;
-  margin-top: 40px;
-}
-table {
-  color: white;
-  justify-content: start;
-  text-align: left;
-  background-color: #091b304b;
-  padding: 10px;
-  box-shadow: 5px 5px 5px 0px rgba(6, 2, 46, 0.74);
-}
-th {
-  padding: 10px !important;
-  text-align: center;
-}
-td {
-  padding: 8px !important;
-}
-table,
-th,
-td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-
 /*Login*/
 .login {
   margin-top: 12vh;
@@ -115,4 +79,14 @@ td {
   margin: 10px;
 }
 
-/* Mis Finanzas: botones*/
+/* CSS para animaciones en tarjetas */
+.card {
+  transition: transform 0.2s, box-shadow 0.2s; /* Agrega transiciones para transformaciones y sombreado */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Agrega una sombra predeterminada */
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+}

@@ -24,6 +24,7 @@ const traerDatos = async () => {
 
 traerDatos();
 
+//muestro las diferentes monedas a través de un carousel de tarjetas
 function mostrarTarjetas(data) {
   const carouselContainer = document.querySelector(".carousel-inner");
   let groupCounter = 0;
@@ -57,9 +58,13 @@ function mostrarTarjetas(data) {
           <div class="card-body text-center">
             <h5 class="card-title">${monedas.name}</h5>
             <h4 class="card-text">$${monedas.current_price} ARS</h4>
-            <p>Últimas 24hs.  ${monedas.price_change_percentage_24h.toFixed(
-              2
+            <p>Últimas 24hs:  ${monedas.price_change_percentage_24h.toFixed(
+              3
             )}%</p>
+            <button class="btn btn-info" data-id=${monedas.id}>
+            <i class="bi bi-star"></i>
+                Añadir a favoritos
+            </button>
           </div>
         </div>
     `;
