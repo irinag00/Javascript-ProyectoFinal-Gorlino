@@ -136,8 +136,6 @@
       </a>
     </div>
 
-    <!-- El modal -->
-
     <div class="">
       <h5 class="text-white text-center p-3" id="usuario"></h5>
     </div>
@@ -146,138 +144,32 @@
       <h3 class="text-white">Cotizaciones</h3>
     </div>
 
-    <div id="cryptoCarousel" class="carousel slide" data-bs-ride="carousel">
+    <!-- Carousel, las tarjetas se van generando con el main con los datos de la api -->
+
+    <div id="carouselContainer" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
-        <div class="carousel-item active">
-          <div class="row carousel-monedas">
-            <div class="col-md-4">
-              <div
-                class="card d-flex align-items-center justify-content-center"
-              >
-                <img
-                  src="../images/Bitcoin.svg.png"
-                  class="card-img-top"
-                  alt="Imagen de la criptomoneda"
-                />
-                <div class="card-body text-center">
-                  <h5 class="card-title">Bitcoin</h5>
-                  <p class="card-text">1 BTC = $7956436.92</p>
-                  <!-- <input class="form-control mb-2" type="number" id="montoPesosBTC" placeholder="Monto en $">
-                  <button class="btn btn-info text-white" onclick="calcularMoneda('BTC')">Comprar BTC</button> -->
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div
-                class="card d-flex align-items-center justify-content-center"
-              >
-                <img
-                  src="../images/417-4176826_ethereum-transparent-png-logo-ethereum-png-png-download.png"
-                  class="card-img-top"
-                  alt="Imagen de la criptomoneda"
-                />
-                <div class="card-body text-center">
-                  <h5 class="card-title">Ethereum</h5>
-                  <p class="card-text">1 ETH = $507851.38</p>
-                  <!-- <input class="form-control mb-2" type="number" id="montoPesosETH" placeholder="Monto en $">
-                  <button class="btn btn-info text-white" onclick="calcularMoneda('ETH')">Comprar ETH</button> -->
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div
-                class="card d-flex align-items-center justify-content-center"
-              >
-                <img
-                  src="../images/png-transparent-coin-ripple-xrp-crypto-currency-and-coin-icon.png"
-                  class="card-img-top"
-                  alt="Imagen de la criptomoneda"
-                />
-                <div class="card-body text-center">
-                  <h5 class="card-title">Ripple</h5>
-                  <p class="card-text">1 XRP = $194.46</p>
-                  <!-- <input class="form-control mb-2" type="number" id="montoPesosXRP" placeholder="Monto en $">
-                  <button class="btn btn-info text-white" onclick="calcularMoneda('XRP')">Comprar XRP</button> -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-item">
-          <div class="row carousel-monedas">
-            <div class="col-md-4">
-              <div
-                class="card d-flex align-items-center justify-content-center"
-              >
-                <img
-                  src="../images/multi-collateral-dai-dai-logo.png"
-                  class="card-img-top"
-                  alt="Imagen de la criptomoneda"
-                />
-                <div class="card-body text-center">
-                  <h5 class="card-title">Dai</h5>
-                  <p class="card-text">1 DAI = $272.78</p>
-                  <!-- <input class="form-control mb-2" type="number" id="montoPesosDAI" placeholder="Monto en $">
-                  <button class="btn btn-info text-white" onclick="calcularMoneda('DAI')">Comprar DAI</button> -->
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div
-                class="card d-flex align-items-center justify-content-center"
-              >
-                <img
-                  src="../images/png-clipart-bitcoin-cash-logo-cryptocurrency-15-bitcoin-generator-text-trademark.png"
-                  class="card-img-top"
-                  alt="Imagen de la criptomoneda"
-                />
-                <div class="card-body text-center">
-                  <h5 class="card-title">Bitcoin Cash</h5>
-                  <p class="card-text">1 BCH = $66254.49</p>
-                  <!-- <input class="form-control mb-2" type="number" id="montoPesosBCH" placeholder="Monto en $">
-                  <button class="btn btn-info text-white" onclick="calcularMoneda('BCH')">Comprar BCH</button> -->
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div
-                class="card d-flex align-items-center justify-content-center"
-              >
-                <img
-                  src="../images/png-transparent-tether-united-states-dollar-cryptocurrency-fiat-money-market-capitalization-bitcoin-logo-bitcoin-trade.png"
-                  class="card-img-top"
-                  alt="Imagen de la criptomoneda"
-                />
-                <div class="card-body text-center">
-                  <h5 class="card-title">Tether</h5>
-                  <p class="card-text">1 USDT = $273.11</p>
-                  <!-- <input class="form-control mb-2" type="number" id="montoPesosUSDT" placeholder="Monto en $">
-                  <button id="btn-Comprar" class="btn btn-info text-white" onclick="calcularMoneda('USDT')">Comprar USDT</button> -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <!-- Las tarjetas de las monedas estan acá -->
       </div>
-      <button
+      <a
         class="carousel-control-prev"
-        type="button"
-        data-bs-target="#cryptoCarousel"
+        href="#carouselContainer"
+        role="button"
         data-bs-slide="prev"
       >
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
-      </button>
-      <button
+      </a>
+      <a
         class="carousel-control-next"
-        type="button"
-        data-bs-target="#cryptoCarousel"
+        href="#carouselContainer"
+        role="button"
         data-bs-slide="next"
       >
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Next</span>
-      </button>
+      </a>
     </div>
+
     <div
       class="text-center"
       id="errorCompra"

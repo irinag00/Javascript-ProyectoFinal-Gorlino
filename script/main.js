@@ -13,6 +13,60 @@ let resultado;
 let correcto;
 let usuario;
 
+const traerDatos = async () => {
+  const response = await fetch(
+    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=ars&order=market_cap_desc&per_page=6&page=1&sparkline=false&locale=es" //api de CoinGecko
+  );
+  const data = await response.json();
+
+  mostrarTarjetas(data);
+};
+
+traerDatos();
+
+function mostrarTarjetas(data) {
+  const carouselContainer = document.querySelector(".carousel-inner");
+  let groupCounter = 0;
+  let cardRow;
+
+  data.forEach((monedas, index) => {
+    if (index % 3 === 0) {
+      const cardGroup = document.createElement("div");
+      cardGroup.classList.add("carousel-item");
+      if (groupCounter === 0) {
+        cardGroup.classList.add("active");
+      }
+      cardRow = document.createElement("div");
+      cardRow.classList.add("row", "carousel-monedas");
+
+      cardGroup.appendChild(cardRow);
+      carouselContainer.appendChild(cardGroup);
+      groupCounter++;
+    }
+    const cardCol = document.createElement("div");
+    cardCol.classList.add("col-md-4");
+    cardCol.innerHTML = `
+        <div
+          class="card d-flex align-items-center justify-content-center"
+        >
+          <img
+            src="${monedas.image}"
+            class="card-img-top"
+            alt="Imagen de la criptomoneda"
+          />
+          <div class="card-body text-center">
+            <h5 class="card-title">${monedas.name}</h5>
+            <h4 class="card-text">$${monedas.current_price} ARS</h4>
+            <p>Últimas 24hs.  ${monedas.price_change_percentage_24h.toFixed(
+              2
+            )}%</p>
+          </div>
+        </div>
+    `;
+    cardRow.appendChild(cardCol);
+  });
+}
+
 //cuando se clickea en el boton 'Iniciar sesión' de la página de 'login'
 const btnIngresar = document.getElementById("btnLogin");
 if (btnIngresar) {
@@ -25,8 +79,6 @@ function ingresarDatos() {
   nombre = document.getElementById("nombreInput").value;
   apellido = document.getElementById("apellidoInput").value;
   validarDatos(nombre, apellido); //valido datos ingresados
-  let datosCompletos = `${apellido}, ${nombre}`;
-  localStorage.setItem("datosCompletos", datosCompletos); //datos almacenados en el localstorage
 
   if (datosCorrectos) {
     // correcto = document.getElementById("divCorrecto");
@@ -39,9 +91,19 @@ function ingresarDatos() {
         background: "linear-gradient(to right, #00b09b, #96c93d)",
       },
     }).showToast();
+    let datosCompletos = `${apellido}, ${nombre}`;
+    localStorage.setItem("datosCompletos", datosCompletos); //datos almacenados en el localstorage
     //vacío los campos
     document.getElementById("nombreInput").value = "";
     document.getElementById("apellidoInput").value = "";
+  } else {
+    Toastify({
+      text: "Los datos ingresados son incorrectos. Intente nuevamente.",
+      className: "info",
+      style: {
+        background: "linear-gradient(to right, #ff5f6d, #ffc371)",
+      },
+    }).showToast();
   }
 }
 
@@ -255,42 +317,6 @@ function mostrarTrasacciones() {
     localStorage.removeItem("transacciones");
     location.reload();
   }
-}
-
-function depositarDinero() {
-  // const swalWithBootstrapButtons = Swal.mixin({
-  //   customClass: {
-  //     confirmButton: 'btn btn-success',
-  //     cancelButton: 'btn btn-danger'
-  //   },
-  //   buttonsStyling: false
-  // })
-  // swalWithBootstrapButtons.fire({
-  //   title: '¿Desea depositar dinero?',
-  //   text: "Recuerde que solo puede depositar en pesos argentinos ($).",
-  //   // icon: 'warning',
-  //   showCancelButton: true,
-  //   confirmButtonText: 'Confirmar',
-  //   cancelButtonText: 'Cancelar',
-  //   reverseButtons: true,
-  // }).then((result) => {
-  //   if (result.isConfirmed) {
-  //     swalWithBootstrapButtons.fire(
-  //       '¡Depósito Exitoso!',
-  //       '',
-  //       'success'
-  //     )
-  //   } else if (
-  //     /* Read more about handling dismissals below */
-  //     result.dismiss === Swal.DismissReason.cancel
-  //   ) {
-  //     swalWithBootstrapButtons.fire(
-  //       'Operación Cancelada',
-  //       '',
-  //       'error'
-  //     )
-  //   }
-  // })
 }
 
 function eliminarCompras() {
