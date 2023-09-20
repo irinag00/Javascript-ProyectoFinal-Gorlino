@@ -1,116 +1,118 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;500&family=Poppins:wght@200;500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@300;500&family=Poppins:wght@200;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap");
 * {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
-    text-decoration: none;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  text-decoration: none;
 }
-body{
-    background-image: url("../images/Sprinkle.svg");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    font-family: 'Poppins', sans-serif;
+body {
+  background-image: url("../images/Sprinkle.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  font-family: "Poppins", sans-serif;
 }
 
 /* NavBar */
-header{
-   /* #0E2A47; */
-   background-color: #091b30;
-   box-shadow: 5px 10px 18px rgba(0, 0, 0, 0.2);
+header {
+  /* #0E2A47; */
+  background-color: #091b30;
+  box-shadow: 5px 10px 18px rgba(0, 0, 0, 0.2);
 }
-.navbar{
-    padding: 0% !important;
+.navbar {
+  padding: 0% !important;
 }
 .navbar-nav li {
-    padding-right: 20px;
+  padding-right: 20px;
 }
 .nav-link {
-    font-size: 1.1em !important;
+  font-size: 1.1em !important;
 }
-.nav-item :hover{
-    color: #507E95;
+.nav-item :hover {
+  color: #507e95;
 }
-.dropdown-menu{
-    background-color: #507E95;
+.dropdown-menu {
+  background-color: #507e95;
 }
-.imagen-logo{
-    width: 90px;
-    margin: 0%;
+.imagen-logo {
+  width: 90px;
+  margin: 0%;
 }
 
 /*Tablas*/
-.title{
-    padding: 30px;
-    color: white;
-    font-size: 150%;
-    text-align: center;
-    text-shadow: 1px 1px 2px rgb(0, 0, 41);
-    margin-bottom: 5vh;
-    margin-top: 5vh;
+.title {
+  padding: 30px;
+  color: white;
+  font-size: 150%;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgb(0, 0, 41);
+  margin-bottom: 5vh;
+  margin-top: 5vh;
 }
-.tabla-monedas{
-    text-align: center;
-    margin-top: 40px;
+.tabla-monedas {
+  text-align: center;
+  margin-top: 40px;
 }
-table{
-    color: white;
-    justify-content: start;
-    text-align: left;
-    background-color:#091b304b;
-    padding: 10px;
-    box-shadow: 5px 5px 5px 0px rgba(6, 2, 46, 0.74);
+table {
+  color: white;
+  justify-content: start;
+  text-align: left;
+  background-color: #091b304b;
+  padding: 10px;
+  box-shadow: 5px 5px 5px 0px rgba(6, 2, 46, 0.74);
 }
-th{
-    padding: 10px !important;
-    text-align: center;
+th {
+  padding: 10px !important;
+  text-align: center;
 }
-td{
-    padding: 8px !important;
+td {
+  padding: 8px !important;
 }
-table, th, td{
-    border: 1px solid black;
-    border-collapse:collapse ;
+table,
+th,
+td {
+  border: 1px solid black;
+  border-collapse: collapse;
 }
 
 /*Login*/
-.login{
-    margin-top: 12vh;
+.login {
+  margin-top: 12vh;
 }
 /*Inicio*/
-.imagen-inicio{
-    width: 120%;
+.imagen-inicio {
+  width: 120%;
 }
-.btn-empezar{ 
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-top: 10px;
+.btn-empezar {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 10px;
 }
- /* Mis Finanzas: carousel*/
- .card-img-top{
-  width: 200px; 
-  height: 200px; 
-  object-fit: cover; 
+/* Mis Finanzas: carousel*/
+.card-img-top {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
 }
 /* .row{
     margin-left: 10%;
     margin-right: 10%;
 } */
-.index{
-    margin-left: 5%;
-    margin-right: 5%;
+.index {
+  margin-left: 5%;
+  margin-right: 5%;
 }
-.carousel-monedas{
-    margin-left: 10%;
-    margin-right: 10%;
+.carousel-monedas {
+  margin-left: 10%;
+  margin-right: 10%;
 }
 /* Mis Finanzas: botones*/
-.btn-deposito-compra{
-    margin: 10px;
+.btn-deposito-compra {
+  margin: 10px;
 }
 
 /* Mis Finanzas: botones*/
