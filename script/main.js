@@ -29,9 +29,16 @@ function ingresarDatos() {
   localStorage.setItem("datosCompletos", datosCompletos); //datos almacenados en el localstorage
 
   if(datosCorrectos){
-    correcto = document.getElementById("divCorrecto");
-    correcto.style.display = "block";
-    correcto.textContent = "¡Su usuario se ingresó correctamente!";
+    // correcto = document.getElementById("divCorrecto");
+    // correcto.style.display = "block";
+    // correcto.textContent = "¡Su usuario se ingresó correctamente!";
+    Toastify({
+      text: "¡Su usuario se ingresó correctamente! Ingrese al apartado 'Mis Finanzas'.",
+      className: "info",
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+      }
+    }).showToast();
     //vacío los campos
     document.getElementById("nombreInput").value = "";
     document.getElementById("apellidoInput").value="";
@@ -247,6 +254,45 @@ function mostrarTrasacciones(){
     location.reload();
   }
 
+}
+
+function depositarDinero () {
+  // const swalWithBootstrapButtons = Swal.mixin({
+  //   customClass: {
+  //     confirmButton: 'btn btn-success',
+  //     cancelButton: 'btn btn-danger'
+  //   },
+  //   buttonsStyling: false
+  // })
+  
+  
+  // swalWithBootstrapButtons.fire({
+  //   title: '¿Desea depositar dinero?',
+  //   text: "Recuerde que solo puede depositar en pesos argentinos ($).",
+  //   // icon: 'warning',
+  //   showCancelButton: true,
+  //   confirmButtonText: 'Confirmar',
+  //   cancelButtonText: 'Cancelar',
+  //   reverseButtons: true,
+  // }).then((result) => {
+    
+  //   if (result.isConfirmed) {
+  //     swalWithBootstrapButtons.fire(
+  //       '¡Depósito Exitoso!',
+  //       '',
+  //       'success'
+  //     )
+  //   } else if (
+  //     /* Read more about handling dismissals below */
+  //     result.dismiss === Swal.DismissReason.cancel
+  //   ) {
+  //     swalWithBootstrapButtons.fire(
+  //       'Operación Cancelada',
+  //       '',
+  //       'error'
+  //     )
+  //   }
+  // })
 }
 
 function eliminarCompras(){
