@@ -12,8 +12,8 @@ let error;
 let resultado;
 let correcto;
 let usuario;
-let favoritos = [];
 
+//llamada a la api y paso los datos a dos funciones, la de comprar moneda y la de mostrar cotizaciones.
 const getCoins = async () => {
   const response = await fetch(
     "https://api.coingecko.com/api/v3/coins/markets?vs_currency=ars&order=market_cap_desc&per_page=6&page=1&sparkline=false&locale=es" //api de CoinGecko
@@ -21,11 +21,42 @@ const getCoins = async () => {
   const data = await response.json();
 
   showCards(data);
+  buyCrypto(data);
 };
 
 getCoins();
 
-//muestro las diferentes moned as a través de un carousel de tarjetas
+function buyCrypto(data) {
+  const select = document.getElementById("crypto");
+  let errorCompra = document.getElementById("errorCompra");
+  // const showCalculation = document.getElementById("showCalculation");
+  data.forEach((crypto) => {
+    select.innerHTML += `
+    <option value="${crypto.id}">${crypto.name}</option>
+    `;
+  });
+  const buy = document.getElementById("convert");
+  buy.addEventListener("click", function () {
+    const amountInput = document.getElementById("amount").value;
+    const selectCrypto = select.value;
+    if (isNaN(amountInput) || amountInput > 0) {
+      const selectedCryptoValue = data.find(
+        (crypto) => crypto.id === selectCrypto
+      );
+      if (selectedCryptoValue) {
+        const cryptoPrice = selectedCryptoValue.current_price;
+        const result = amountInput / cryptoPrice;
+        console.log(result);
+        errorCompra.style.display = "none"; //oculta el mensaje de error
+      }
+    } else {
+      errorCompra.style.display = "block";
+      errorCompra.textContent =
+        "Por favor, ingresa un monto válido en pesos argentinos.";
+    }
+  });
+}
+//muestro las diferentes monedas a través de un carousel de tarjetas
 function showCards(data) {
   const carouselContainer = document.querySelector(".carousel-inner");
   let groupCounter = 0;
@@ -62,23 +93,16 @@ function showCards(data) {
             <p>Últimas 24hs:  ${monedas.price_change_percentage_24h.toFixed(
               3
             )}%</p>
-            <button class="btn btn-info add-to-favorites" data-id=${monedas.id}>
+            <!--<button class="btn btn-info add-to-favorites" data-id=${
+              monedas.id
+            }>
             <i class="bi bi-star"></i>
                 Añadir a favoritos
-            </button>
+            </button>-->
           </div>
         </div>
     `;
     cardRow.appendChild(cardCol);
-
-    let add = document.querySelectorAll(".add-to-favorites");
-    add.addEventListener("click", () => {
-      favoritos.push({
-        id: monedas.id,
-        nombre: monedas.name,
-      });
-      console.log(favoritos);
-    });
   });
 }
 
@@ -87,8 +111,9 @@ const btnIngresar = document.getElementById("btnLogin");
 if (btnIngresar) {
   btnIngresar.addEventListener("click", ingresarDatos);
 }
+
 mostrarDatos(); //muestra el nombre y apellido ingresado en la página 'finanzas'
-mostrarTrasacciones(); //muestro la tabla de transacciones (si existen)
+// mostrarTrasacciones(); //muestro la tabla de transacciones (si existen)
 
 function ingresarDatos() {
   nombre = document.getElementById("nombreInput").value;
@@ -96,9 +121,6 @@ function ingresarDatos() {
   validarDatos(nombre, apellido); //valido datos ingresados
 
   if (datosCorrectos) {
-    // correcto = document.getElementById("divCorrecto");
-    // correcto.style.display = "block";
-    // correcto.textContent = "¡Su usuario se ingresó correctamente!";
     Toastify({
       text: "¡Su usuario se ingresó correctamente! Ingrese al apartado 'Mis Finanzas'.",
       className: "info",
@@ -107,7 +129,8 @@ function ingresarDatos() {
       },
     }).showToast();
     let datosCompletos = `${apellido}, ${nombre}`;
-    localStorage.setItem("datosCompletos", datosCompletos); //datos almacenados en el localstorage
+    //datos almacenados en el localstorage
+    localStorage.setItem("datosCompletos", datosCompletos);
     //vacío los campos
     document.getElementById("nombreInput").value = "";
     document.getElementById("apellidoInput").value = "";
@@ -135,7 +158,7 @@ function mostrarDatos() {
 
 function validarDatos(nombre, apellido) {
   error = document.getElementById("divError");
-  if (nombre != "" && apellido != "") {
+  if (nombre != "" && apellido != "" && isNaN(nombre) && isNaN(apellido)) {
     datosCorrectos = true;
     error.style.display = "none"; //oculta el mensaje de error
   } else {
