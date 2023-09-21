@@ -12,20 +12,21 @@ let error;
 let resultado;
 let correcto;
 let usuario;
+let favoritos = [];
 
-const traerDatos = async () => {
+const getCoins = async () => {
   const response = await fetch(
     "https://api.coingecko.com/api/v3/coins/markets?vs_currency=ars&order=market_cap_desc&per_page=6&page=1&sparkline=false&locale=es" //api de CoinGecko
   );
   const data = await response.json();
 
-  mostrarTarjetas(data);
+  showCards(data);
 };
 
-traerDatos();
+getCoins();
 
-//muestro las diferentes monedas a través de un carousel de tarjetas
-function mostrarTarjetas(data) {
+//muestro las diferentes moned as a través de un carousel de tarjetas
+function showCards(data) {
   const carouselContainer = document.querySelector(".carousel-inner");
   let groupCounter = 0;
   let cardRow;
@@ -61,7 +62,7 @@ function mostrarTarjetas(data) {
             <p>Últimas 24hs:  ${monedas.price_change_percentage_24h.toFixed(
               3
             )}%</p>
-            <button class="btn btn-info" data-id=${monedas.id}>
+            <button class="btn btn-info add-to-favorites" data-id=${monedas.id}>
             <i class="bi bi-star"></i>
                 Añadir a favoritos
             </button>
@@ -69,6 +70,15 @@ function mostrarTarjetas(data) {
         </div>
     `;
     cardRow.appendChild(cardCol);
+
+    let add = document.querySelectorAll(".add-to-favorites");
+    add.addEventListener("click", () => {
+      favoritos.push({
+        id: monedas.id,
+        nombre: monedas.name,
+      });
+      console.log(favoritos);
+    });
   });
 }
 
