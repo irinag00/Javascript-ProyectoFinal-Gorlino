@@ -9,13 +9,17 @@ let usuario;
 
 //llamada a la api y paso los datos a dos funciones, la de comprar moneda y la de mostrar cotizaciones.
 const getCoins = async () => {
-  const response = await fetch(
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=ars&order=market_cap_desc&per_page=6&page=1&sparkline=false&locale=es" //api de CoinGecko
-  );
-  const data = await response.json();
+  try {
+    const response = await fetch(
+      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=ars&order=market_cap_desc&per_page=6&page=1&sparkline=false&locale=es" //api de CoinGecko
+    );
+    const data = await response.json();
 
-  showCards(data);
-  buyCrypto(data);
+    showCards(data);
+    buyCrypto(data);
+  } catch (error) {
+    console.error("Ocurrió un error al obtener datos de la API:", error);
+  }
 };
 const btnIngresar = document.getElementById("btnLogin");
 if (btnIngresar) {
@@ -47,12 +51,18 @@ function buyCrypto(data) {
         errorCompra.style.display = "none"; //oculta el mensaje de error
         Swal.fire(
           "Compra Exitosa!",
-          `Has realizado una compra de ${result} ${selectedCryptoValue.symbol}. 
+          `Has realizado una compra de ${result.toFixed(6)} ${
+            selectedCryptoValue.symbol
+          }. 
           Puedes ver tus movimientos en "Mis Finanzas".`,
           "success"
         );
         document.getElementById("amount").value = "";
-        addTransaction(selectedCryptoValue.name, amountInput, result);
+        addTransaction(
+          selectedCryptoValue.name,
+          amountInput,
+          result.toFixed(6)
+        );
       }
     } else {
       //muestro error si no se ingresa numero valido
