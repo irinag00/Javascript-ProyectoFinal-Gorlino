@@ -22,16 +22,18 @@ if (btnIngresar) {
   btnIngresar.addEventListener("click", enterData);
 }
 
+//funcion que recibe como parámetro los datos de la api y los usa para calcular la compra
 function buyCrypto(data) {
   const select = document.getElementById("crypto");
   let errorCompra = document.getElementById("errorCompra");
-  // const showCalculation = document.getElementById("showCalculation");
+  //muestro las opciones de cripo de la api
   data.forEach((crypto) => {
     select.innerHTML += `
     <option value="${crypto.id}">${crypto.name}</option>
     `;
   });
   const buy = document.getElementById("convert");
+  //cuando se hace click en comprar empieza a hacer los calculos
   buy.addEventListener("click", function () {
     const amountInput = document.getElementById("amount").value;
     const selectCrypto = select.value;
@@ -42,7 +44,6 @@ function buyCrypto(data) {
       if (selectedCryptoValue) {
         const cryptoPrice = selectedCryptoValue.current_price;
         const result = amountInput / cryptoPrice;
-        console.log(result);
         errorCompra.style.display = "none"; //oculta el mensaje de error
         Swal.fire(
           "Compra Exitosa!",
@@ -54,13 +55,14 @@ function buyCrypto(data) {
         addTransaction(selectedCryptoValue.name, amountInput, result);
       }
     } else {
+      //muestro error si no se ingresa numero valido
       errorCompra.style.display = "block";
       errorCompra.textContent =
         "Por favor, ingresa un monto válido en pesos argentinos.";
     }
   });
 }
-
+//funcion para añadir las transacciones a un array y luego al localstorage
 function addTransaction(coin, amountPesos, result) {
   let transacciones;
   let transaccion;
@@ -98,7 +100,7 @@ function showCards(data) {
   const carouselContainer = document.querySelector(".carousel-inner");
   let groupCounter = 0;
   let cardRow;
-
+  //aca hago que se muestren de a 3 tarjetas por vuelta de carousel (tengo 6 en total) y tambien para que se vean responsive
   data.forEach((monedas, index) => {
     if (index % 3 === 0) {
       const cardGroup = document.createElement("div");
@@ -137,8 +139,7 @@ function showCards(data) {
   });
 }
 
-//cuando se clickea en el boton 'Iniciar sesión' de la página de 'login'
-
+//cuando estoy en "mis finanzas" evaluo si existe usuario hago un boton de "cerrar sesion" y de lo contrario de "iniciar sesion" lo que redigire a la pantalla de login
 function loginButton() {
   const btnSesion = document.getElementById("btn-sesion");
   // const btn = document.createElement("button");
@@ -149,7 +150,7 @@ function loginButton() {
       <i class="bi bi-box-arrow-in-right"></i>
     </button>`;
     const btnCerrar = document.getElementById("btn-cerrar");
-    btnCerrar.addEventListener("click", deleteUser);
+    btnCerrar.addEventListener("click", deleteUser); //cuando hago click en cerrar sesion, se elimina el usuario
   } else {
     btnSesion.innerHTML = `
     <button type="button"class="btn btn-outline-info" id="btn-inicio">
@@ -161,7 +162,7 @@ function loginButton() {
     });
   }
 }
-
+//datos ingresados por la pantalla de login
 function enterData() {
   nombre = document.getElementById("nombreInput").value;
   apellido = document.getElementById("apellidoInput").value;
@@ -204,7 +205,7 @@ function showData() {
   }
   //muestro datos en la página 'finanzas'
 }
-
+//valido que los datos ingresados no esten vacios, ni seas números
 function validateData(nombre, apellido) {
   error = document.getElementById("divError");
   if (nombre != "" && apellido != "" && isNaN(nombre) && isNaN(apellido)) {
@@ -216,7 +217,7 @@ function validateData(nombre, apellido) {
     datosCorrectos = false;
   }
 }
-
+//muestro las transacciones (si es que existen) y sino muestro que no se ha realizado ninguna compra aun
 function showTransaction() {
   let listado = document.getElementById("listado-transacciones");
   let transacciones = JSON.parse(localStorage.getItem("transacciones")) || [];
@@ -231,7 +232,6 @@ function showTransaction() {
     listado.innerHTML = "<p>¡No has realizado ninguna compra aún!</p>";
   } else if (transacciones.length < 6 && usuarioExistente) {
     //le tuve que limitar las transacciones porque me daba error y no mostraba las nuevas
-    // listado.innerHTML = '';
     listado.innerHTML = `
     <thead class="table-light">
       <tr>
@@ -259,12 +259,14 @@ function showTransaction() {
     location.reload();
   }
 }
+//elimina transacciones a partir de al id que le corresponde el item seleccionado
 function deleteTransactions(id) {
   let transacciones = JSON.parse(localStorage.getItem("transacciones")) || [];
   const eliminar = transacciones.filter((transaccion) => transaccion.id !== id);
   localStorage.setItem("transacciones", JSON.stringify(eliminar));
   location.reload();
 }
+//elimina el usuario (es el "cerrar sesión")
 function deleteUser() {
   usuario = localStorage.getItem("usuario");
   localStorage.removeItem("usuario");
