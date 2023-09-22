@@ -1,9 +1,3 @@
-const bitcoin = 7956436.92;
-const etherium = 507851.38;
-const dai = 272.78;
-const xrp = 194.46;
-const bch = 66254.49;
-const usdt = 273.11;
 let datosCorrectos = false;
 let moneda;
 let nombre;
@@ -23,8 +17,10 @@ const getCoins = async () => {
   showCards(data);
   buyCrypto(data);
 };
-
-getCoins();
+const btnIngresar = document.getElementById("btnLogin");
+if (btnIngresar) {
+  btnIngresar.addEventListener("click", enterData);
+}
 
 function buyCrypto(data) {
   const select = document.getElementById("crypto");
@@ -48,6 +44,14 @@ function buyCrypto(data) {
         const result = amountInput / cryptoPrice;
         console.log(result);
         errorCompra.style.display = "none"; //oculta el mensaje de error
+        Swal.fire(
+          "Compra Exitosa!",
+          `Has realizado una compra de ${result} ${selectedCryptoValue.symbol}. 
+          Puedes ver tus movimientos en "Mis Finanzas".`,
+          "success"
+        );
+        document.getElementById("amount").value = "";
+        addTransaction(selectedCryptoValue.name, amountInput, result);
       }
     } else {
       errorCompra.style.display = "block";
@@ -55,6 +59,39 @@ function buyCrypto(data) {
         "Por favor, ingresa un monto válido en pesos argentinos.";
     }
   });
+}
+
+function addTransaction(coin, amountPesos, result) {
+  let transacciones;
+  let transaccion;
+  let transaccionId = parseInt(localStorage.getItem("transaccionId")) || 1;
+  if (localStorage.getItem("usuario")) {
+    transaccion = {
+      id: transaccionId,
+      usuario: localStorage.getItem("usuario"),
+      fecha: new Date().toLocaleString(),
+      moneda: coin,
+      cantidadPesos: amountPesos,
+      cantidadCripto: result,
+    };
+    transaccionId++;
+    localStorage.setItem("transaccionId", transaccionId.toString());
+
+    transacciones = JSON.parse(localStorage.getItem("transacciones")) || []; //evalua si hay datos o está vacio el localstorage
+    transacciones.push(transaccion); //guardo cada transaccion en un array
+    localStorage.setItem("transacciones", JSON.stringify(transacciones)); //ingreso a local storage las transacciones
+    console.log(transacciones);
+    showTransaction();
+  } else {
+    window.location.href = "login.html";
+    Toastify({
+      text: "Ingrese sus datos antes de continuar.",
+      className: "info",
+      style: {
+        background: "linear-gradient(to right, #ff5f6d, #ffc371)",
+      },
+    }).showToast();
+  }
 }
 //muestro las diferentes monedas a través de un carousel de tarjetas
 function showCards(data) {
@@ -93,12 +130,6 @@ function showCards(data) {
             <p>Últimas 24hs:  ${monedas.price_change_percentage_24h.toFixed(
               3
             )}%</p>
-            <!--<button class="btn btn-info add-to-favorites" data-id=${
-              monedas.id
-            }>
-            <i class="bi bi-star"></i>
-                Añadir a favoritos
-            </button>-->
           </div>
         </div>
     `;
@@ -107,33 +138,51 @@ function showCards(data) {
 }
 
 //cuando se clickea en el boton 'Iniciar sesión' de la página de 'login'
-const btnIngresar = document.getElementById("btnLogin");
-if (btnIngresar) {
-  btnIngresar.addEventListener("click", ingresarDatos);
+
+function loginButton() {
+  const btnSesion = document.getElementById("btn-sesion");
+  // const btn = document.createElement("button");
+  if (localStorage.getItem("usuario")) {
+    btnSesion.innerHTML = `
+    <button type="button" class="btn btn-outline-info" id="btn-cerrar">
+      Cerrar Sesión
+      <i class="bi bi-box-arrow-in-right"></i>
+    </button>`;
+    const btnCerrar = document.getElementById("btn-cerrar");
+    btnCerrar.addEventListener("click", deleteUser);
+  } else {
+    btnSesion.innerHTML = `
+    <button type="button"class="btn btn-outline-info" id="btn-inicio">
+      Iniciar Sesión
+    </button>`;
+    const btnInicio = document.getElementById("btn-inicio");
+    btnInicio.addEventListener("click", function () {
+      window.location.href = "login.html";
+    });
+  }
 }
 
-mostrarDatos(); //muestra el nombre y apellido ingresado en la página 'finanzas'
-// mostrarTrasacciones(); //muestro la tabla de transacciones (si existen)
-
-function ingresarDatos() {
+function enterData() {
   nombre = document.getElementById("nombreInput").value;
   apellido = document.getElementById("apellidoInput").value;
-  validarDatos(nombre, apellido); //valido datos ingresados
+  validateData(nombre, apellido); //valido datos ingresados
 
   if (datosCorrectos) {
     Toastify({
-      text: "¡Su usuario se ingresó correctamente! Ingrese al apartado 'Mis Finanzas'.",
+      text: "¡Su usuario se ingresó correctamente!",
       className: "info",
       style: {
         background: "linear-gradient(to right, #00b09b, #96c93d)",
       },
     }).showToast();
-    let datosCompletos = `${apellido}, ${nombre}`;
-    //datos almacenados en el localstorage
-    localStorage.setItem("datosCompletos", datosCompletos);
+    let usuario = `${apellido}, ${nombre}`;
+    // datos almacenados en el localstorage
+    localStorage.setItem("usuario", usuario);
     //vacío los campos
     document.getElementById("nombreInput").value = "";
     document.getElementById("apellidoInput").value = "";
+    location.reload();
+    window.location.href = "finanzas.html";
   } else {
     Toastify({
       text: "Los datos ingresados son incorrectos. Intente nuevamente.",
@@ -145,8 +194,8 @@ function ingresarDatos() {
   }
 }
 
-function mostrarDatos() {
-  usuario = localStorage.getItem("datosCompletos");
+function showData() {
+  usuario = localStorage.getItem("usuario");
   let mostrarNombre = document.getElementById("usuario");
   if (usuario) {
     mostrarNombre.innerHTML = `Usuario: ${usuario}`;
@@ -156,7 +205,7 @@ function mostrarDatos() {
   //muestro datos en la página 'finanzas'
 }
 
-function validarDatos(nombre, apellido) {
+function validateData(nombre, apellido) {
   error = document.getElementById("divError");
   if (nombre != "" && apellido != "" && isNaN(nombre) && isNaN(apellido)) {
     datosCorrectos = true;
@@ -168,161 +217,13 @@ function validarDatos(nombre, apellido) {
   }
 }
 
-function calcularMoneda(moneda) {
-  let transacciones;
-  let transaccion;
-  let errorCompra = document.getElementById("errorCompra");
-  let exitoCompra = document.getElementById("exitoCompra");
-  let pesosBtc = parseInt(document.getElementById("montoPesosBTC").value);
-  let pesosEth = parseInt(document.getElementById("montoPesosETH").value);
-  let pesosXrp = parseInt(document.getElementById("montoPesosXRP").value);
-  let pesosDai = parseInt(document.getElementById("montoPesosDAI").value);
-  let pesosBch = parseInt(document.getElementById("montoPesosBCH").value);
-  let pesosUsdt = parseInt(document.getElementById("montoPesosUSDT").value);
-  //evaluo que se haya ingresado un nombre y apellido
-  if (localStorage.getItem("datosCompletos")) {
-    switch (moneda) {
-      case "BTC":
-        if (isNaN(pesosBtc) || pesosBtc <= 0) {
-          errorCompra.style.display = "block";
-          errorCompra.textContent =
-            "Por favor, ingresa un monto válido en pesos argentinos.";
-          exitoCompra.style.display = "none";
-          return;
-        }
-        errorCompra.style.display = "none";
-        resultado = convertirMoneda(moneda, pesosBtc);
-        transaccion = {
-          usuario: localStorage.getItem("datosCompletos"),
-          fecha: new Date().toLocaleString(),
-          moneda: moneda,
-          cantidadPesos: pesosBtc,
-          cantidadCripto: resultado,
-        };
-        break;
-      case "ETH":
-        if (isNaN(pesosEth) || pesosEth <= 0) {
-          errorCompra.style.display = "block";
-          errorCompra.textContent =
-            "Por favor, ingresa un monto válido en pesos argentinos.";
-          exitoCompra.style.display = "none";
-          return;
-        }
-        errorCompra.style.display = "none";
-        resultado = convertirMoneda(moneda, pesosEth);
-        transaccion = {
-          usuario: localStorage.getItem("datosCompletos"),
-          fecha: new Date().toLocaleString(),
-          moneda: moneda,
-          cantidadPesos: pesosEth,
-          cantidadCripto: resultado,
-        };
-        break;
-      case "DAI":
-        if (isNaN(pesosDai) || pesosDai <= 0) {
-          errorCompra.style.display = "block";
-          errorCompra.textContent =
-            "Por favor, ingresa un monto válido en pesos argentinos.";
-          exitoCompra.style.display = "none";
-          return;
-        }
-        errorCompra.style.display = "none";
-        resultado = convertirMoneda(moneda, pesosDai);
-        transaccion = {
-          usuario: localStorage.getItem("datosCompletos"),
-          fecha: new Date().toLocaleString(),
-          moneda: moneda,
-          cantidadPesos: pesosDai,
-          cantidadCripto: resultado,
-        };
-        break;
-      case "XRP":
-        if (isNaN(pesosXrp) || pesosXrp <= 0) {
-          errorCompra.style.display = "block";
-          errorCompra.textContent =
-            "Por favor, ingresa un monto válido en pesos argentinos.";
-          exitoCompra.style.display = "none";
-          return;
-        }
-        errorCompra.style.display = "none";
-        resultado = convertirMoneda(moneda, pesosXrp);
-        transaccion = {
-          usuario: localStorage.getItem("datosCompletos"),
-          fecha: new Date().toLocaleString(),
-          moneda: moneda,
-          cantidadPesos: pesosXrp,
-          cantidadCripto: resultado,
-        };
-        break;
-      case "BCH":
-        if (isNaN(pesosBch) || pesosBch <= 0) {
-          errorCompra.style.display = "block";
-          errorCompra.textContent =
-            "Por favor, ingresa un monto válido en pesos argentinos.";
-          exitoCompra.style.display = "none";
-          return;
-        }
-        errorCompra.style.display = "none";
-        resultado = convertirMoneda(moneda, pesosBch);
-        transaccion = {
-          usuario: localStorage.getItem("datosCompletos"),
-          fecha: new Date().toLocaleString(),
-          moneda: moneda,
-          cantidadPesos: pesosBch,
-          cantidadCripto: resultado,
-        };
-        break;
-      case "USDT":
-        if (isNaN(pesosUsdt) || pesosUsdt <= 0) {
-          errorCompra.style.display = "block";
-          errorCompra.textContent =
-            "Por favor, ingresa un monto válido en pesos argentinos.";
-          exitoCompra.style.display = "none";
-          return;
-        }
-        errorCompra.style.display = "none";
-        resultado = convertirMoneda(moneda, pesosUsdt);
-        transaccion = {
-          usuario: localStorage.getItem("datosCompletos"),
-          fecha: new Date().toLocaleString(),
-          moneda: moneda,
-          cantidadPesos: pesosUsdt,
-          cantidadCripto: resultado,
-        };
-        break;
-    }
-
-    transacciones = JSON.parse(localStorage.getItem("transacciones")) || []; //evalua si hay datos o está vacio el localstorage
-    transacciones.push(transaccion); //guardo cada transaccion en un array
-    localStorage.setItem("transacciones", JSON.stringify(transacciones)); //ingreso a local storage las transacciones
-
-    exitoCompra.style.display = "block";
-    exitoCompra.textContent = "¡Compra Exitosa!"; //muestra compra exitosa en verde
-    mostrarTrasacciones(); //muestro la tabla de transacciones
-  } else {
-    window.location.href = "login.html";
-  }
-}
-
-function convertirMoneda(moneda, cantidad) {
-  const tasas = {
-    BTC: bitcoin,
-    ETH: etherium,
-    DAI: dai,
-    XRP: xrp,
-    BCH: bch,
-    USDT: usdt,
-  };
-  return cantidad / tasas[moneda];
-}
-
-function mostrarTrasacciones() {
+function showTransaction() {
   let listado = document.getElementById("listado-transacciones");
   let transacciones = JSON.parse(localStorage.getItem("transacciones")) || [];
   let usuarioExistente = false;
   //evalua si el usuario guardado en localstorage es igual al ingresado, si es true entonces me muestra las transacciones que realizó ese usuario
   transacciones.forEach((item) => {
-    if (item.usuario === localStorage.getItem("datosCompletos")) {
+    if (item.usuario === localStorage.getItem("usuario")) {
       usuarioExistente = true;
     }
   });
@@ -338,6 +239,7 @@ function mostrarTrasacciones() {
         <th>Moneda</th>
         <th>Pesos Ingresados ($) </th>
         <th>Monto Final</th>
+        <th></th>
       </tr>
     </thead>`;
     transacciones.forEach((item) => {
@@ -348,6 +250,7 @@ function mostrarTrasacciones() {
             <td>${item.moneda}</td>
             <td>${item.cantidadPesos}</td>
             <td>${item.cantidadCripto} ${item.moneda}</td>
+            <td><button type="button" class="btn btn-danger" onclick="deleteTransactions(${item.id})">Eliminar</button></td>
           </tr>
         </tbody>`;
     });
@@ -356,92 +259,19 @@ function mostrarTrasacciones() {
     location.reload();
   }
 }
-
-function eliminarCompras() {
+function deleteTransactions(id) {
   let transacciones = JSON.parse(localStorage.getItem("transacciones")) || [];
-  if (transacciones.length === 0) {
-    listado.innerHTML = "<p>¡No has realizado ninguna compra aún!</p>";
-  } else {
-    localStorage.removeItem("transacciones");
-    location.reload();
-  }
+  const eliminar = transacciones.filter((transaccion) => transaccion.id !== id);
+  localStorage.setItem("transacciones", JSON.stringify(eliminar));
+  location.reload();
 }
-function eliminarUsuario() {
-  usuario = localStorage.getItem("datosCompletos");
-  localStorage.removeItem("datosCompletos");
+function deleteUser() {
+  usuario = localStorage.getItem("usuario");
+  localStorage.removeItem("usuario");
   location.reload();
 }
 
-// function calcularNada(datosCorrectos){
-//     if (datosCorrectos == true){
-
-//       let transacciones = [];
-
-//       let entrada = prompt("Ingresar la moneda a comprar (en mayúscula), indicando los símbolos (BTC, ETH, DAI, XRP, BCH, USDT). Cuando desea cancelar, escriba 'ESC'.");
-
-//       while (entrada != "ESC"){
-//         switch (entrada){
-//           case "BTC":
-//           case "ETH":
-//           case "DAI":
-//           case "XRP":
-//           case "BCH":
-//           case "USDT":
-//             moneda = prompt("Ingrese la cantidad de pesos argentinos ($) para comprar la moneda ingresada.");
-//             validarNro(moneda);
-//             resultado = convertirMoneda(entrada, parseInt(moneda));
-
-//             const transaccion = {
-//               moneda: entrada,
-//               cantidadPesos: moneda,
-//               cantidadCripto: resultado
-//             };
-
-//             transacciones.push(transaccion);
-//             break;
-
-//             default:
-//               alert("La moneda ingresada es incorrecta.");
-//               break;
-//         }
-//         entrada = prompt("Ingresar la moneda a comprar (en mayúscula), indicando los símbolos (BTC, ETH, DAI, XRP, BCH, USDT). Cuando desea cancelar, escriba 'ESC'.");
-//       }
-
-//       for (const transaccion of transacciones) {
-//         alert(`Usted señor/a: ${apellido}, ${nombre} ha ingresado:
-//         Cantidad de Pesos ingresados: $${transaccion.cantidadPesos}
-//         Cantidad de Cripto comprado: ${transaccion.cantidadCripto} ${transaccion.moneda}.
-//         `);
-//       }
-
-//       busquedaMoneda(transacciones);
-//       filtrarCrypto (transacciones);
-
-//       function busquedaMoneda (transacciones){
-//         let nombreMoneda= prompt("Ingrese el nombre de la moneda que desea buscar en sus compras");
-//         let compra= transacciones.find((item) => item.moneda === nombreMoneda);
-//         if(compra){
-//           alert(`
-//             Moneda: ${compra.moneda}
-//             Cantidad de Pesos ingresados: $${compra.cantidadPesos}
-//             Cantidad de Cripto comprado: ${compra.cantidadCripto}
-//           `);
-//         } else {
-//           alert("No has adquirido la crypto ingresada.");
-//         };
-//       }
-//       function filtrarCrypto (transacciones){
-//         let crypto= parseInt(prompt("Ingrese el número mínimo de cryptos compradas para filtrarlos."));
-//         let filtrados= transacciones.filter((item) => item.cantidadCripto > crypto);
-
-//         filtrados.forEach((item) => {
-//           alert(`
-//             Moneda: ${item.moneda}
-//             Cantidad de Pesos ingresados: $${item.cantidadPesos}
-//             Cantidad de Cripto comprado: ${item.cantidadCripto}
-//           `);
-//         })
-//       }
-//     }
-//     datosCorrectos = false;
-//   }
+getCoins();
+showData();
+showTransaction();
+loginButton();

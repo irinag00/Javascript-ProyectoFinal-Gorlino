@@ -75,18 +75,21 @@ header {
   margin-right: 10%;
 }
 /* Mis Finanzas: botones*/
-.btn-deposito-compra {
+.div-compra {
   margin: 10px;
 }
-
+.btn-compra {
+  padding: 13px;
+  font-size: 19px;
+}
 /* CSS para animaciones en tarjetas */
 .card {
   transition: transform 0.2s, box-shadow 0.2s; /* Agrega transiciones para transformaciones y sombreado */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); /* Agrega una sombra predeterminada */
+  box-shadow: 0px 0px 10px rgba(18, 62, 80, 0.3); /* Agrega una sombra predeterminada */
   cursor: pointer;
 }
 
 .card:hover {
   transform: translateY(-10px);
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.671);
 }
